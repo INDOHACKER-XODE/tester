@@ -1,24 +1,24 @@
-# Futuristic and Elegant README
+# ManaNimeTest
 
 This is a futuristic and elegant README template. Feel free to customize it for your project.
 
-For more information, visit our [website](https://example.com).
+For more information, visit our [website](https://manganimetest.netlify.app/).
 
 ## Features
 
-- Futuristic design
-- Elegant typography
-- Responsive layout
+- Top Manga
+- Top Anime
+- Searching Manga Dan Anime
 
 ## Usage
 
-1. Clone the repository: `git clone https://github.com/your-username/your-repository.git`
-2. Install dependencies: `npm install`
-3. Run the application: `npm start`
+1. Clone the repository: `git clone https://github.com/INDOHACKER-XODE/tester.git`
+2. or copy code index.html
+3. paste your teks editor
 
 ## Screenshots
 
-![Screenshot 1](screenshots/screenshot1.png)
+![Screenshot 1](code.jpg)
 ![Screenshot 2](screenshots/screenshot2.png)
 
 ## Contributing
@@ -26,10 +26,10 @@ For more information, visit our [website](https://example.com).
 If you'd like to contribute to this project, please follow these guidelines.
 
 1. Fork the repository
-2. Create a new branch: `git checkout -b feature/new-feature`
+2. Create a new branch: `git checkout -b git/new-git`
 3. Make your changes
-4. Commit your changes: `git commit -m 'Add new feature'`
-5. Push to the branch: `git push origin feature/new-feature`
+4. Commit your changes: `git commit -m 'Add new git`
+5. Push to the branch: `git push origin git/new-git`
 6. Submit a pull request
 
 ## License
