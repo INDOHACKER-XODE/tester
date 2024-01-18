@@ -1,4 +1,4 @@
-# ManaNimeTest
+# MangaNimeTest
 
 This is a futuristic and elegant README template. Feel free to customize it for your project.
 
@@ -18,7 +18,7 @@ For more information, visit our [website](https://manganimetest.netlify.app/).
 
 ## Screenshots
 
-![Screenshot 1](code.jpg)
+![Screenshot 1](code.png)
 ![Screenshot 2](screenshots/screenshot2.png)
 
 ## Contributing
