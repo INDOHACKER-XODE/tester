@@ -21,17 +21,9 @@ For more information, visit our [website](https://manganimetest.netlify.app/).
 ![Screenshot 1](code.png)
 ![Screenshot 2](ss.png)
 
-## Contributing
+## Animation
+To add a touch of animation to your project, we've included some animations using [Animate.css](https://animate.style/). Simply include the necessary classes in your HTML elements.
 
-If you'd like to contribute to this project, please follow these guidelines.
-
-1. Fork the repository
-2. Create a new branch: `git checkout -b git/new-git`
-3. Make your changes
-4. Commit your changes: `git commit -m 'Add new git`
-5. Push to the branch: `git push origin git/new-git`
-6. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Example:
+```html
+<div class="animate__animated animate__bounce">Animated Text</div>
