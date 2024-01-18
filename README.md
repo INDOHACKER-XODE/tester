@@ -19,7 +19,7 @@ For more information, visit our [website](https://manganimetest.netlify.app/).
 ## Screenshots
 
 ![Screenshot 1](code.png)
-![Screenshot 2](screenshots/screenshot2.png)
+![Screenshot 2](ss.png)
 
 ## Contributing
 
