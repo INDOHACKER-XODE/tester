@@ -1,11 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tester</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Top Manga & Anime</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
+      .container {
+        margin-top: 50px;
+      }
+      .card {
+        margin-bottom: 20px;
+        transition: transform 0.2s ease-in-out;
+        height: 100%;
+      }
+      .card:hover {
+        transform: scale(1.05);
+      }
+      .social-icons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .social-icons a {
+        margin: 0 10px;
+        text-decoration: none;
+        color: #000;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="mb-4">Top Manga & Anime</h1>
+
+      <!-- Pencarian -->
+      <div class="form-group">
+        <label for="searchInput">Search:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="searchInput"
+          placeholder="Enter search term"
+        />
+        <button class="btn btn-primary mt-2" onclick="search()">Search</button>
+      </div>
+
+      <!-- Container untuk menampilkan top manga -->
+      <h2 id="mangaTitle">Top Manga</h2>
+      <div class="row" id="top-manga"></div>
+
+      <!-- Container untuk menampilkan top anime -->
+      <h2 id="animeTitle" class="mt-4">Top Anime</h2>
+      <div class="row" id="top-anime"></div>
+      <div>
+        <center><span>Dibuat Oleh <a href="https://www.instagram.com/mcisreal_?igsh=bGkxYzd4eXEzeWpt"><b>Kira</b></a>&#10084;</span></center>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      // Declare searchTerm globally
+      let searchTerm;
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Menampilkan top manga saat halaman dimuat
+        fetch("https://api.jikan.moe/v4/top/manga")
+          .then((response) => response.json())
+          .then((data) => displayTopManga(data.data || []))
+          .catch((error) => console.error("Error fetching manga data:", error));
+
+        // Menampilkan top anime saat halaman dimuat
+        fetch("https://api.jikan.moe/v4/top/anime")
+          .then((response) => response.json())
+          .then((data) => displayTopAnime(data.data || []))
+          .catch((error) => console.error("Error fetching anime data:", error));
+
+        // Fungsi untuk menampilkan top manga
+        function displayTopManga(mangaList) {
+          const topMangaContainer = document.getElementById("top-manga");
+          const mangaTitle = document.getElementById("mangaTitle");
+
+          if (mangaList) {
+            mangaList.slice(0, 8).forEach((manga) => {
+              const card = createCard(
+                manga.title,
+                manga.images.jpg.image_url,
+                manga.url
+              );
+              topMangaContainer.appendChild(card);
+            });
+          } else {
+            console.error(
+              "Error: Manga data is missing or in an unexpected format."
+            );
+          }
+        }
+
+        // Fungsi untuk menampilkan top anime
+        function displayTopAnime(animeList) {
+          const topAnimeContainer = document.getElementById("top-anime");
+          const animeTitle = document.getElementById("animeTitle");
+
+          if (animeList) {
+            animeList.slice(0, 8).forEach((anime) => {
+              const card = createCard(
+                anime.title,
+                anime.images.jpg.image_url,
+                anime.url
+              );
+              topAnimeContainer.appendChild(card);
+            });
+          } else {
+            console.error(
+              "Error: Anime data is missing or in an unexpected format."
+            );
+          }
+        }
+
+        // Fungsi untuk membuat elemen card
+        function createCard(title, imageUrl, url) {
+          const card = document.createElement("div");
+          card.className = "col-md-3 mb-4"; // Adjusted column width for small screens
+          card.innerHTML = `
+                <div class="card">
+                    <img src="${
+                      imageUrl || "https://placehold.it/300x400"
+                    }" class="card-img-top" alt="${title}">
+                    <div class="card-body">
+                        <h5 class="card-title">${title}</h5>
+                        <a href="${url}" class="btn btn-primary" target="_blank">Detail</a>
+                    </div>
+                </div>
+            `;
+          return card;
+        }
+
+        // Fungsi untuk melakukan pencarian
+        window.search = function () {
+          searchTerm = document
+            .getElementById("searchInput")
+            .value.toLowerCase();
+          const topMangaContainer = document.getElementById("top-manga");
+          const topAnimeContainer = document.getElementById("top-anime");
+
+          // Menghapus card-card yang ada sebelumnya
+          topMangaContainer.innerHTML = "";
+          topAnimeContainer.innerHTML = "";
+
+          mangaTitle.textContent = searchTerm
+            ? `Search results for "${searchTerm}" (Manga)`
+            : "Top Manga";
+          animeTitle.textContent = searchTerm
+            ? `Search results for "${searchTerm}" (Anime)`
+            : "Top Anime";
+
+          // Parameter pencarian
+          const searchParams = new URLSearchParams({
+            q: searchTerm,
+            type: "manga", // Tipe manga
+            sfw: true, // Hanya tampilkan konten Safe For Work
+            order_by: "score", // Urutkan berdasarkan skor
+            sort: "desc", // Urutan descending (dari yang tertinggi)
+            // Anda dapat menambahkan parameter lain sesuai kebutuhan
+          });
+
+          // Parameter pencarian
+          const searchParam = new URLSearchParams({
+            q: searchTerm,
+            type: "tv", // Tipe manga
+            sfw: true, // Hanya tampilkan konten Safe For Work
+            order_by: "score", // Urutkan berdasarkan skor
+            sort: "desc", // Urutan descending (dari yang tertinggi)
+            // Anda dapat menambahkan parameter lain sesuai kebutuhan
+          });
+
+          // Mengambil data manga baru sesuai dengan kata kunci pencarian dan parameter lainnya
+          fetch(`https://api.jikan.moe/v4/manga?${searchParams.toString()}`)
+            .then((response) => response.json())
+            .then((data) => displayTopManga(data.data || []))
+            .catch((error) =>
+              console.error("Error fetching manga data:", error)
+            );
+
+          // Mengambil data anime baru sesuai dengan kata kunci pencarian
+          fetch(`https://api.jikan.moe/v4/anime?${searchParam.toString()}`)
+            .then((response) => response.json())
+            .then((data) => displayTopAnime(data.data || []))
+            .catch((error) =>
+              console.error("Error fetching anime data:", error)
+            );
+        };
+      });
+    </script>
+  </body>
 </html>
